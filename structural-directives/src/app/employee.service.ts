@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IEmployee } from './employee';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class EmployeeService {
@@ -10,7 +11,12 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getEmployees(): Observable<IEmployee[]>{
-    return this.http.get<IEmployee[]>(this._url);  // that's the path for the json file but should be url of the web server.
+  getEmployees(): Observable<IEmployee[]>{     // that's the path for the json file but should be url of the web server.
+    return this.http.get<IEmployee[]>(this._url)
+                    .catch(this.errorHandler);
+  }
+
+  errorHandler(error: HttpErrorResponse){
+    return Observable.throw(error.message || "Server Error");
   }
 }
