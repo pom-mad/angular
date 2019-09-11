@@ -1,6 +1,6 @@
 <div style="text-align:center">
   <h1>
-    Welcome
+    {{message}}
   </h1>
 </div>
-<div app-test></div>
+<app-test (childEvent)="message=$event" [parentData]="name"></app-test>

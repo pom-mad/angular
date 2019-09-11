@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: '[app-test]',
+  selector: 'app-test',
   template: `
     <h2 *ngIf="displayName; else elseBlock">
       {{title}}
@@ -20,6 +20,8 @@ import { Component, OnInit } from '@angular/core';
     <div *ngFor="let color of colors; index as i">
       <h2>{{i}} {{color}}</h2>
     </div>
+    <h2>{{"hello " + name}}</h2>
+    <button (click)="fireEvent()">Send Event</button>
   `,
   styles: []
 })
@@ -28,10 +30,16 @@ export class TestComponent implements OnInit {
   displayName = true;
   color = "red";
   colors = ["red", "blue", "green", "yellow"];
+  @Input('parentData') name; // that's from app.componen.html 
+  @Output() childEvent = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  fireEvent(){
+    this.childEvent.emit('hey my dude!');
   }
 
 }
