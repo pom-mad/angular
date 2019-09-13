@@ -1,3 +1,4 @@
+import { RegistrationService } from './registration.service';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { forbiddenNameValidator } from './shared/user-name.validator';
@@ -28,7 +29,7 @@ export class AppComponent {
     this.alternateEmails.push(this.fb.control(''));
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private _registrationService: RegistrationService) {}
 
   ngOnInit() {
     this.registrationForm = this.fb.group({
@@ -68,8 +69,8 @@ export class AppComponent {
   //   })
   // });
 
-  loadApiData(){        //patchValue is for a part of the form like only username and password
-    this.registrationForm.setValue({
+  loadApiData(){        //setValue is for full form like only username and password
+    this.registrationForm.patchValue({
       username: 'bruce',
       email: 'bruce@mail.com',
       subscribe: true,
@@ -82,4 +83,13 @@ export class AppComponent {
       }
     });
   }
+
+  onSubmit(){
+    console.log(this.registrationForm.value);
+    this._registrationService.register(this.registrationForm.value).subscribe(
+        response => console.log('Success!', response),
+        error => console.error('Error!', error)
+      );
+  }
+
 }

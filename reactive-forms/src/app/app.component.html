@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Registration Form</h2>
   <pre hidden>{{registrationForm.value | json}}</pre>
-  <form [formGroup]="registrationForm">
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Username</label>
       <input [class.is-invalid]="username.invalid && username.touched"
@@ -19,7 +19,7 @@
       <label>Email</label>
       <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateEmail()">Add Email</button>
       <input [class.is-invalid]="email.invalid && email.touched" type="text" formControlName="email" class="form-control">
-      <small [class.d-none]="email.valid && email.untouched" class="text-danger">Email is required</small>
+      <small [class.d-none]="email.valid || email.untouched" class="text-danger">Email is required</small>
       <div formArrayName="alternateEmails" *ngFor="let email of alternateEmails.controls; let i=index">
         <input type="text" [formControlName]="i" class="form-control my-1">
       </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary" type="submit">Register</button>
+    <button class="btn btn-primary" [disabled]="!registrationForm.valid" type="submit">Register</button>
     <button (click)="loadApiData()" class="btn btn-secondary ml-2" type="button">Load API Data</button>
 
   </form>
