@@ -7,7 +7,16 @@ import { User } from './user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  topics = ['Angular', 'React', 'Vue']
+  topics = ['Angular', 'React', 'Vue'];
+  topicHasError = true;
 
-  userModel = new User('', 'rob@test.com', 55555555, '', 'morning', true);
+  userModel = new User('', 'rob@test.com', 55555555, 'default', 'morning', true);
+  validateTopic(value){
+    if(value==='default'){
+      this.topicHasError = true;
+    }
+    else{
+      this.topicHasError = false;
+    }
+  }
 }
