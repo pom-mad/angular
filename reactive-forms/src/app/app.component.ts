@@ -17,4 +17,17 @@ export class AppComponent {
         postalCode: new FormControl('')
       })
     });
+
+    loadApiData(){        //patchValue is for a part of the form like only username and password
+      this.registrationForm.setValue({
+        username: 'bruce',
+        password: 'test',
+        confirmPassword: 'test',
+        address: {
+          city: 'City',
+          state: 'State',
+          postalCode: '123123'
+        }
+      });
+    }
 }
