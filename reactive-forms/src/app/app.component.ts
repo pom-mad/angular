@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { forbiddenNameValidator } from './shared/user-name.validator';
 import { PasswordValidator } from './shared/password.validator';
 
@@ -10,22 +10,43 @@ import { PasswordValidator } from './shared/password.validator';
 })
 export class AppComponent {
 
+  registrationForm: FormGroup;
+
   get username(){
     return this.registrationForm.get('username');
   }
 
+  get email(){
+    return this.registrationForm.get('email');
+  }
+
   constructor(private fb: FormBuilder) {}
 
-  registrationForm = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/password/)]],
-    password: [''],
-    confirmPassword: [''],
-    address: this.fb.group({
-      city: [''],
-      state: [''],
-      postalCode: ['']
-    })
-  }, {validator: PasswordValidator});
+  ngOnInit() {
+    this.registrationForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator(/password/)]],
+      email: [''],
+      subscribe: [false],
+      password: [''],
+      confirmPassword: [''],
+      address: this.fb.group({
+        city: [''],
+        state: [''],
+        postalCode: ['']
+      })
+    }, {validator: PasswordValidator});
+
+    this.registrationForm.get('subscribe').valueChanges
+      .subscribe(checkedValue =>{
+        const email = this.registrationForm.get('email');
+        if(checkedValue){
+          email.setValidators(Validators.required);
+        }else{
+          email.clearValidators();
+        }
+        email.updateValueAndValidity();
+      });
+  }
 
   // registrationForm = new FormGroup({
   //   username: new FormControl('mad'),
@@ -41,6 +62,8 @@ export class AppComponent {
   loadApiData(){        //patchValue is for a part of the form like only username and password
     this.registrationForm.setValue({
       username: 'bruce',
+      email: 'bruce@mail.com',
+      subscribe: true,
       password: 'test',
       confirmPassword: 'test',
       address: {
