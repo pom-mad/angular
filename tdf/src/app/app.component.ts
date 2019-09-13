@@ -10,7 +10,8 @@ export class AppComponent {
   topics = ['Angular', 'React', 'Vue'];
   topicHasError = true;
 
-  userModel = new User('', 'rob@test.com', 55555555, 'default', 'morning', true);
+  userModel = new User('rob', 'rob@test.com', 5555555555, 'default', 'morning', true);
+  
   validateTopic(value){
     if(value==='default'){
       this.topicHasError = true;
@@ -18,5 +19,5 @@ export class AppComponent {
     else{
       this.topicHasError = false;
     }
-  }
+  };
 }
