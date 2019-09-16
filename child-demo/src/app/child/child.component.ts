@@ -6,7 +6,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./child.component.css']
 })
 export class ChildComponent implements OnInit {
-  @Input() loggedIn: boolean;
+  private _loggedIn: boolean;
+  message: string;
+  get loggedIn():boolean{
+    return this._loggedIn;
+  }
+  @Input()
+  set loggedIn(value: boolean){
+    this._loggedIn = value;
+    if(value === true){
+      this.message = 'Welcome back username';
+    }else{
+      this.message = 'Please log in';
+    }
+  }
   constructor() { }
 
   ngOnInit() {
