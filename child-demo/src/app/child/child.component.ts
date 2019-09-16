@@ -32,4 +32,8 @@ export class ChildComponent implements OnChanges {
     }
   }
 
+  greetUser(){
+    alert('hey user!');
+  }
+
 }
