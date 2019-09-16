@@ -11,6 +11,18 @@ export class AppComponent {
   count = 0;
   name: string;
   username: string;
+  private _customerName: string;
+
+  get customerName(): string{
+    return this._customerName;
+  }
+
+  set customerName(value: string){
+    this._customerName = value;
+    if(value === 'username'){
+      alert('Welcome back username');
+    }
+  }
 
   incrementCount(){
     this.count += 1;

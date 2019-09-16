@@ -16,3 +16,8 @@
   <input type="text" [ngModel]="username" (ngModelChange)="greetUser($event)">
   <p>Welcome {{ username }}</p>
 </div>
+
+<div>
+  <input type="text" [(ngModel)]="customerName">
+  <p>Welcome {{ customerName }}</p>
+</div>
